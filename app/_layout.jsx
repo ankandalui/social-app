@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { Stack, useRouter } from "expo-router";
 import { AuthProvider, useAuth } from "../context/AuthContext";
 import { supabase } from "../lib/supabase";
+import { getUserData } from "../services/userService";
 
 const _layout = () => {
   return (
@@ -24,6 +25,7 @@ const MainLayout = () => {
         // set auth
         // move to home screen
         setAuth(session?.user);
+        updateUserData(session?.user);
         router.replace("/home");
       } else {
         //set auth null
@@ -33,6 +35,11 @@ const MainLayout = () => {
       }
     });
   }, []);
+
+  const updateUserData = async (user) => {
+    let res = await getUserData(user?.id);
+    console.log("got user data: ", res);
+  };
 
   return (
     <Stack

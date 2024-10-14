@@ -5,7 +5,9 @@ import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../lib/supabase";
 
 const Home = () => {
-  const { setAuth } = useAuth();
+  const { user, setAuth } = useAuth();
+
+  console.log("user: ", user);
 
   const onLogout = async () => {
     const { error } = await supabase.auth.signOut();
