@@ -17,16 +17,18 @@ import { theme } from "../constants/theme";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { supabase } from "../lib/supabase";
+import IOSStyleAlert from "../components/IOSStyleAlert";
 
 const Login = () => {
   const router = useRouter();
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const [loading, setLoading] = useState(false);
+  const [profileAlertVisible, setProfileAlertVisible] = useState(false);
 
   const onSubmit = async () => {
     if (!emailRef.current || !passwordRef.current) {
-      Alert.alert("Login", "Please fill all the fields!");
+      setProfileAlertVisible(true);
       return;
     }
 
@@ -95,6 +97,12 @@ const Login = () => {
           </Pressable>
         </View>
       </View>
+      <IOSStyleAlert
+        visible={profileAlertVisible}
+        title="Log in"
+        message="Please fill all the fields!"
+        onClose={() => setProfileAlertVisible(false)}
+      />
     </ScreenWrapper>
   );
 };
