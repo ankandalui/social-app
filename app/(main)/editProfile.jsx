@@ -45,7 +45,7 @@ const EditProfile = () => {
   const onSubmit = async () => {
     let userData = { ...user };
     let { name, phoneNumber, image, address, bio } = userData;
-    if (!name || !phoneNumber || !address || !bio || !image) {
+    if (!name || !phoneNumber || !address || !bio) {
       setProfileAlertVisible(true);
       return;
     }
