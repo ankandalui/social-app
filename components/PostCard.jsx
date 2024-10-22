@@ -13,6 +13,7 @@ import { downloadFile, getSupabaseFileUrl } from "../services/imageService";
 import { Video } from "expo-av";
 import { createPostLike, removePostLike } from "../services/postService";
 import Loading from "./Loader";
+import IOSStyleAlert from "./IOSStyleAlert";
 
 const textStyle = {
   color: theme.colors.dark,
@@ -36,6 +37,9 @@ const PostCard = ({
   router,
   hasShadow = true,
   showMoreIcon = true,
+  showDelete = false,
+  onDelete = () => {},
+  onEdit = () => {},
 }) => {
   const shadowStyles = {
     shadowOffset: {
@@ -50,6 +54,7 @@ const PostCard = ({
   const [likes, setLikes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [imageExpanded, setImageExpanded] = useState(false);
+  const [logoutAlertVisible, setLogoutAlertVisible] = useState(false);
 
   const toggleImageExpand = () => {
     setImageExpanded(!imageExpanded);
@@ -102,6 +107,10 @@ const PostCard = ({
     }
   };
 
+  const handlePostDelete = () => {
+    setLogoutAlertVisible(true);
+  };
+
   const createdAt = moment(item?.created_at).format("MMM D");
 
   const liked = likes.some((like) => like.userId === currentUser?.id);
@@ -129,6 +138,16 @@ const PostCard = ({
               color={theme.colors.text}
             />
           </TouchableOpacity>
+        )}
+        {showDelete && currentUser.id == item?.userId && (
+          <View style={styles.actions}>
+            <TouchableOpacity onPress={() => onEdit(item)}>
+              <Icon name="edit" size={hp(2.5)} color={theme.colors.text} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handlePostDelete}>
+              <Icon name="delete" size={hp(2.5)} color={theme.colors.rose} />
+            </TouchableOpacity>
+          </View>
         )}
       </View>
       {/* post body & media */}
@@ -217,6 +236,24 @@ const PostCard = ({
           )}
         </View>
       </View>
+      <IOSStyleAlert
+        visible={logoutAlertVisible}
+        title="Confirm"
+        message="Are you sure to delete comment?"
+        buttons={[
+          {
+            text: "Cancel",
+            onPress: () => console.log("Modal cancelled"),
+            style: "cancel",
+          },
+          {
+            text: "Delete",
+            onPress: () => onDelete(item),
+            style: "destructive",
+          },
+        ]}
+        onClose={() => setLogoutAlertVisible(false)}
+      />
     </View>
   );
 };
