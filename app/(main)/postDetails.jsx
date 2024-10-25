@@ -19,10 +19,11 @@ import CommentItem from "../../components/CommentItem";
 import { filter } from "ramda";
 import { supabase } from "../../lib/supabase";
 import { getUserData } from "../../services/userService";
+import { createNotification } from "../../services/notificationService";
 
 const PostDetails = () => {
   const { user } = useAuth();
-  const { postId } = useLocalSearchParams();
+  const { postId, commentId } = useLocalSearchParams();
   console.log("got post Id: ", postId);
 
   const [post, setPost] = useState(null);
@@ -78,7 +79,17 @@ const PostDetails = () => {
     let res = await createComment(data);
     setLoading(false);
     if (res.success) {
-      // send notification <!-- later --->
+      // createNotification
+      if (user.id != post.userId) {
+        // send notification
+        let notify = {
+          senderId: user.id,
+          receiverId: post.userId,
+          title: "commented on your post",
+          data: JSON.stringify({ postId: post.id, commentId: res?.data?.id }),
+        };
+        createNotification(notify);
+      }
       inputRef?.current?.clear();
       commentRef.current = "";
     } else {
@@ -191,6 +202,7 @@ const PostDetails = () => {
               key={comment?.id?.toString()}
               item={comment}
               onDelete={onDeleteComment}
+              highlight={comment.id == commentId}
               canDelete={user.id == comment.userId || user.id == post.userId}
             />
           ))}

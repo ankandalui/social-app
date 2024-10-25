@@ -8,7 +8,12 @@ import { TouchableOpacity } from "react-native";
 import Icon from "../assets/icons";
 import IOSStyleAlert from "./IOSStyleAlert";
 
-const CommentItem = ({ item, canDelete = false, onDelete = () => {} }) => {
+const CommentItem = ({
+  item,
+  canDelete = false,
+  onDelete = () => {},
+  highlight = false,
+}) => {
   const createdAt = moment(item?.created_at).format("MMM d");
   const [logoutAlertVisible, setLogoutAlertVisible] = useState(false);
 
@@ -18,7 +23,7 @@ const CommentItem = ({ item, canDelete = false, onDelete = () => {} }) => {
   return (
     <View style={styles.container}>
       <Avatar uri={item?.user?.image} />
-      <View style={styles.content}>
+      <View style={[styles.content, highlight && styles.highlight]}>
         <View
           style={{
             flexDirection: "row",
@@ -83,7 +88,7 @@ const styles = StyleSheet.create({
     borderCurve: "continuous",
   },
   highlight: {
-    borderWidth: 0.2,
+    borderWidth: 0.5,
     backgroundColor: "white",
     borderColor: theme.colors.dark,
     shadowColor: theme.colors.dark,
