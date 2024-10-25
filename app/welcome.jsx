@@ -18,7 +18,7 @@ WelcomeScreen = () => {
         <Image
           style={styles.welcomeImage}
           resizeMode="contain"
-          source={require("../assets/images/welcome.png")}
+          source={require("../assets/images/Chatting.gif")}
         />
 
         {/* title */}
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(4),
   },
   welcomeImage: {
-    height: hp(30),
+    height: hp(45),
     width: wp(100),
     alignSelf: "center",
   },
