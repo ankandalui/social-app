@@ -1,4 +1,6 @@
-# Welcome to your Expo app 👋
+# Real Time Social Media App 👋
+
+![Screenshot of the App] (https://github.com/ankandalui/social-app/blob/eb6f1c530164d682ff38cec3b2d97959c050c23e/ScreenShot.png)
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
