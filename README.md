@@ -1,4 +1,4 @@
-# Real Time Social Media App 👋
+# Real Time Social Media App 👋 (You can't run this app directly by cloning, you have to setup Supabase database to run this app)
 
 ![image alt](https://github.com/ankandalui/social-app/blob/eb6f1c530164d682ff38cec3b2d97959c050c23e/ScreenShot.png?raw=true)
 
